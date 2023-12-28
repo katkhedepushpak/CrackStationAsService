@@ -1,0 +1,61 @@
+openapi: 3.0.3
+info:
+  title: Crackstation Decrypter
+  description: |-
+    This is a crackstation Server. 
+  contact:
+    email: katkhedp@oregonstate.edu
+  license:
+    name: License
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.1
+servers:
+  - url: https://vsrt3vn9g6.execute-api.us-west-2.amazonaws.com/prod/password/
+tags:
+  - name: Decrypter
+    description: Decrypter as a Service
+    
+paths:
+  /password/{shaHash}:
+    get:
+      tags:
+        - Decrypter
+      summary: Cracks sha-1 and sha-256 hash 
+      description: Reponse will be cracked password for the input hash
+      parameters:
+        - name: shaHash
+          in: path
+          description: sha-1 or sha-256 hash value
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/shaHash'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/shaHash'
+        '404':
+          description: The input shaHash value does not conform to [A-Za-z0-9?!]{1,3} regex or is not a valid shaHash value
+
+components:
+  schemas:
+    shaHash:
+      required:
+        - name
+        - photoUrls
+      type: object
+      properties:
+        0cd031110b3a584a9dd45805344646031cce3ef9bdfeb597341f6fb8a7d54bc8:
+          type: string
+          format: string
+          example: IKv
+        
+      xml:
+        name: shaHash
+ 
